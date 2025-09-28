@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0
+
+WORKDIR /src
+
+# Порты, которые будем использовать
+EXPOSE 8080
+EXPOSE 8081
+
+# В dev мы не копируем код, он маунтится из volume
+# Поэтому restore и build выполняем уже внутри контейнера при старте
