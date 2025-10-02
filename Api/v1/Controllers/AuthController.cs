@@ -13,17 +13,20 @@ namespace DNDApi.Api.v1.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
-        // private readonly IPasswordHasher<UserEntity> _passwordHasher;
+        private readonly IPasswordHasher<UserEntity> _passwordHasher;
+        private readonly JwtService _jwtService;
 
         public AuthController(
             IConfiguration configuration,
-            IUserService userService
-            // IPasswordHasher<UserEntity> passwordHasher
+            IUserService userService,
+            IPasswordHasher<UserEntity> passwordHasher,
+            JwtService jwtService
         )
         {
             _configuration = configuration;
             _userService = userService;
-            // _passwordHasher = passwordHasher;
+            _passwordHasher = passwordHasher;
+            _jwtService = jwtService;
         }
 
 
@@ -38,36 +41,30 @@ namespace DNDApi.Api.v1.Controllers
                     return Unauthorized(new { message = "Неверные учетные данные" });
                 }
 
-                // var result = _passwordHasher.VerifyHashedPassword(
-                //     user,
-                //     user.Password,
-                //     request.Password
-                // );
+                PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(
+                    user,
+                    user.Password,
+                    request.Password
+                );
 
-                // if (result == PasswordVerificationResult.Failed)
-                // {
-                //     return Unauthorized(new { message = "Неверные учетные данные" });
-                // }
-
-                return Ok(new
+                if (result == PasswordVerificationResult.Failed)
                 {
-                    
-                    token = "123",
-                    user = new
-                    {
-                        id = user.Id,
-                        username = user.Login
-                    }
-                });
+                    return Unauthorized(new { message = "Неверные учетные данные" });
+                }
+                
+                string token = _jwtService.GenerateToken(user.Id, user.IsDm);
 
-                // var token = GenerateJ
+                return Ok(new AuthResponse
+                {
+                    Token = token
+                });
             }
             catch (System.Exception ex)
             {
                 return StatusCode(500, new
                 {
                     success = false,
-                    message = "Error retrieving users",
+                    message = "Error durring authentication",
                     error = ex.Message,
                     details = ex.InnerException?.Message
                 });
