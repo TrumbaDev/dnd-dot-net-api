@@ -36,6 +36,8 @@ services:
     volumes:
       - .:/src
       - ~/.nuget/packages:/root/.nuget/packages
+      - ./bin:/src/bin
+      - ./obj:/src/obj
     command: >
       sh -c "dotnet restore &&
              dotnet watch run --urls=http://0.0.0.0:8080"

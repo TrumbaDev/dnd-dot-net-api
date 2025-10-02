@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DNDApi.Api.v1.Models.Entities
 {
     [Table("users")]
-    public class User
+    public class UserEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,6 +14,14 @@ namespace DNDApi.Api.v1.Models.Entities
         [Required]
         [MaxLength(100)]
         [Column("login")]
-        public string login { get; set; } = string.Empty;
+        public string Login { get; set; } = string.Empty;
+
+        [Required]
+        [Column("password")]
+        public string Password { get; set; } = string.Empty;
+
+        [Required]
+        [Column("isdm")]
+        public bool IsDm { get; set; } = false;
     }
 }

@@ -6,5 +6,4 @@ WORKDIR /src
 EXPOSE 8080
 EXPOSE 8081
 
-# В dev мы не копируем код, он маунтится из volume
-# Поэтому restore и build выполняем уже внутри контейнера при старте
+CMD ["dotnet", "watch", "run", "--urls=http://0.0.0.0:8080", "--non-interactive"]

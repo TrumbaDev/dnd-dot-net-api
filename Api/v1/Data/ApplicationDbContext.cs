@@ -10,14 +10,14 @@ namespace DNDApi.Api.v1.Data
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserEntity>(entity =>
             {
-                entity.HasIndex(u => u.login).IsUnique();
+                entity.HasIndex(u => u.Login).IsUnique();
             });
         }
     }
