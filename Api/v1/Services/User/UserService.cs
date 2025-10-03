@@ -9,13 +9,11 @@ namespace DNDApi.Api.v1.Services.User
     public class UserService : IUserService
     {
 
-        private readonly ApplicationDbContext _context;
-        // private readonly IPasswordHasher<UserEntity> _passwordHasher;
+        private readonly UsersDbContext _context;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(UsersDbContext context)
         {
             _context = context;
-            // _passwordHasher = passwordHasher;
         }
 
         public async Task<UserEntity> GetByUserNameAsync(string username)

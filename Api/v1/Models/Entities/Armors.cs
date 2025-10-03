@@ -1,0 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DNDApi.Api.v1.Models.Entities
+{
+    public class ArmorsEntity
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [Column("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [MaxLength(500)]
+        [Column("description")]
+        public string Description { get; set; } = string.Empty;
+    }
+}

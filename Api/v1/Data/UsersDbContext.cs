@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DNDApi.Api.v1.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class UsersDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+
+        public UsersDbContext(DbContextOptions<UsersDbContext> options)
+        : base(options)
         {
-
         }
-
         public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

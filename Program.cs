@@ -21,7 +21,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<UsersDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ItemsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
@@ -63,8 +65,11 @@ foreach (var endpoint in app.Services.GetRequiredService<EndpointDataSource>().E
 // Автоматически создаём БД
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.EnsureCreated();
+    var usersDbContext = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
+    usersDbContext.Database.EnsureCreated();
+
+    var itemsDbContext = scope.ServiceProvider.GetRequiredService<ItemsDbContext>();
+    itemsDbContext.Database.EnsureCreated();
 }
 
 app.Run();
