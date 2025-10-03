@@ -1,5 +1,5 @@
 using DNDApi.Api.v1.Data;
-using DNDApi.Api.v1.Models.Entities;
+using DNDApi.Api.v1.Models.Entities.Items;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +54,84 @@ namespace DNDApi.Api.v1.Controllers
                 {
                     success = true,
                     data = weapons
+                });
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error durring authentication",
+                    error = ex.Message,
+                    details = ex.InnerException?.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("all-potions")]
+        public IActionResult GetAllPotions()
+        {
+            try
+            {
+                PotionEntity[] potions = _context.Potion.ToArray();
+                return Ok(new
+                {
+                    success = true,
+                    data = potions
+                });
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error durring authentication",
+                    error = ex.Message,
+                    details = ex.InnerException?.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("all-others")]
+        public IActionResult GetAllOthers()
+        {
+            try
+            {
+                OthersEntity[] others = _context.Others.ToArray();
+                return Ok(new
+                {
+                    success = true,
+                    data = others
+                });
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error durring authentication",
+                    error = ex.Message,
+                    details = ex.InnerException?.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("all-foods")]
+        public IActionResult GetAllFoods()
+        {
+            try
+            {
+                FoodsEntity[] foods = _context.Foods.ToArray();
+                return Ok(new
+                {
+                    success = true,
+                    data = foods
                 });
             }
             catch (System.Exception ex)

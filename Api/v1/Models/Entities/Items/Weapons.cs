@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DNDApi.Api.v1.Models.Entities
+namespace DNDApi.Api.v1.Models.Entities.Items
 {
     public class WeaponsEntity
     {
