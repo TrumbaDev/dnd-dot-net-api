@@ -11,19 +11,16 @@ namespace DNDApi.Api.v1.Controllers
     [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         private readonly IPasswordHasher<UserEntity> _passwordHasher;
         private readonly JwtService _jwtService;
 
         public AuthController(
-            IConfiguration configuration,
             IUserService userService,
             IPasswordHasher<UserEntity> passwordHasher,
             JwtService jwtService
         )
         {
-            _configuration = configuration;
             _userService = userService;
             _passwordHasher = passwordHasher;
             _jwtService = jwtService;

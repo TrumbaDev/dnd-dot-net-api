@@ -1,7 +1,6 @@
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore; 
 
 namespace DNDApi.Api.v1.Services.User
