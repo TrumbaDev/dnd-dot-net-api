@@ -8,15 +8,26 @@ namespace DNDApi.Api.v1.Data
         public ItemsDbContext(DbContextOptions<ItemsDbContext> options) : base(options){}
         
         public DbSet<ArmorsEntity> Armors { get; set; }
+        
+        public DbSet<WeaponsEntity> Weapons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
 
             modelBuilder.Entity<ArmorsEntity>(entity =>
             {
                 entity.ToTable("armors_table");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<WeaponsEntity>(entity =>
+            {
+                entity.ToTable("weapons_table");
 
                 entity.HasKey(e => e.Id);
 

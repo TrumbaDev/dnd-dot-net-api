@@ -41,5 +41,31 @@ namespace DNDApi.Api.v1.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("all-weapons")]
+        public IActionResult GetAllWeapons()
+        {
+            try
+            {
+                WeaponsEntity[] weapons = _context.Weapons.ToArray();
+                return Ok(new
+                {
+                    success = true,
+                    data = weapons
+                });
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error durring authentication",
+                    error = ex.Message,
+                    details = ex.InnerException?.Message
+                });
+            }
+        }
     }
 }
