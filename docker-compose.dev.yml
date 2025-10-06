@@ -33,11 +33,11 @@ services:
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=dnd_db;Username=root;Password=password
       - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=1
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
     volumes:
       - .:/src
       - ~/.nuget/packages:/root/.nuget/packages
-      - ./bin:/src/bin
-      - ./obj:/src/obj
     command: >
       sh -c "dotnet restore &&
              dotnet watch run --urls=http://0.0.0.0:8080"
