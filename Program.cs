@@ -1,8 +1,10 @@
+using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
+using DNDApi.Api.v1.Services.Hero;
 using DNDApi.Api.v1.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -28,8 +30,11 @@ builder.Services.AddDbContext<ItemsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<EnumersDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<HeroDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
 builder.Services.AddScoped<EnumerService>();
@@ -84,6 +89,9 @@ using (var scope = app.Services.CreateScope())
 
     var enumersDbContext = scope.ServiceProvider.GetRequiredService<EnumersDbContext>();
     enumersDbContext.Database.EnsureCreated();
+
+    var heroDbContext = scope.ServiceProvider.GetRequiredService<HeroDbContext>();
+    heroDbContext.Database.EnsureCreated();
 }
 
 app.Run();
