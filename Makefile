@@ -27,6 +27,10 @@ dev-logs:
 restart-api:
 	docker-compose -f docker-compose.dev.yml restart api
 
+rebuild-api:
+	docker-compose -f docker-compose.dev.yml build api
+	docker-compose -f docker-compose.dev.yml up -d api
+
 clean-cache:
 	docker exec dnd_dotnet_api dotnet clean
 	docker exec dnd_dotnet_api rm -rf bin obj

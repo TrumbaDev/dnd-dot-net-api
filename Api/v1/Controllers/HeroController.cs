@@ -27,7 +27,8 @@ namespace DNDApi.Api.v1.Controllers
                 HeroEntity hero = await service.GetById(id);
                 return Ok(new
                 {
-                    success = true
+                    success = true,
+                    data = hero
                 });
             }
             catch (System.Exception ex)
