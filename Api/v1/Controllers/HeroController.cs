@@ -1,6 +1,6 @@
 using DNDApi.Api.v1.Contracts.Hero;
+using DNDApi.Api.v1.DTO.HeroDTO;
 using DNDApi.Api.v1.Exceptions;
-using DNDApi.Api.v1.Models.Entities.Hero;
 using DNDApi.Api.v1.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace DNDApi.Api.v1.Controllers
         public async Task<IActionResult> GetHero(int id)
         {
             int userId = JwtService.GetUserIdFromPrincipal(User);
-            HeroEntity hero = await service.GetById(id, userId);
+            HeroResponse hero = await service.GetById(id, userId);
 
             if (hero == null)
             {
@@ -33,9 +33,9 @@ namespace DNDApi.Api.v1.Controllers
             }
 
             return Ok(new
-                {
-                    data = hero
-                });
+            {
+                hero
+            });
         }
     }
 }

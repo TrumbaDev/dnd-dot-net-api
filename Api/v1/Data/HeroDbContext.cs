@@ -8,6 +8,7 @@ namespace DNDApi.Api.v1.Data
         public HeroDbContext(DbContextOptions<HeroDbContext> options) : base(options) { }
 
         public DbSet<HeroEntity> Hero { get; set; }
+        public DbSet<ParamsEntity> Params { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,6 +19,13 @@ namespace DNDApi.Api.v1.Data
                 entity.ToTable("heroes");
                 entity.HasKey(e => e.HeroId);
                 entity.Property(e => e.HeroId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<ParamsEntity>(entity =>
+            {
+                entity.ToTable("parametrs");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
         }
     }
