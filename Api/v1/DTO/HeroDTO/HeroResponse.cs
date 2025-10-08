@@ -1,9 +1,10 @@
+
 namespace DNDApi.Api.v1.DTO.HeroDTO
 {
     public class HeroResponse
     {
-        public int HeroID;
-        public int UserID;
+        public int HeroID { get; set; }
+        public int UserID { get; set; }
         public string Race { get; set; } = string.Empty;
         public string Class { get; set; } = string.Empty;
         public string HeroName { get; set; } = string.Empty;

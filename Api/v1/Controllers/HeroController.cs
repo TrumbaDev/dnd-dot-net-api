@@ -27,11 +27,6 @@ namespace DNDApi.Api.v1.Controllers
             int userId = JwtService.GetUserIdFromPrincipal(User);
             HeroResponse hero = await service.GetById(id, userId);
 
-            if (hero == null)
-            {
-                throw new NotFoundException($"Герой с ID {id} не найден");
-            }
-
             return Ok(new
             {
                 hero

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DNDApi.Api.v1.Models.Entities.Hero;
 
 namespace DNDApi.Api.v1.DTO.HeroDTO
 {
@@ -8,7 +9,7 @@ namespace DNDApi.Api.v1.DTO.HeroDTO
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
         [Required]
         public int PlayerId { get; set; }
 
@@ -28,7 +29,7 @@ namespace DNDApi.Api.v1.DTO.HeroDTO
         public int SpasStrength { get; set; }
         public int SpasAgility { get; set; }
         public int SpasStamina { get; set; }
-        public int SpasIntelligence { get; set; } 
+        public int SpasIntelligence { get; set; }
         public int SpasWisdom { get; set; }
         public int SpasCharisma { get; set; }
 
@@ -39,7 +40,7 @@ namespace DNDApi.Api.v1.DTO.HeroDTO
         public int Perception { get; set; }
         public int Survival { get; set; }
         public int Performance { get; set; }
-        public int Intimidation { get; set; } 
+        public int Intimidation { get; set; }
         public int History { get; set; }
         public int SleightOfHand { get; set; }
         public int Magic { get; set; }
@@ -50,11 +51,55 @@ namespace DNDApi.Api.v1.DTO.HeroDTO
         public int Religion { get; set; }
         public int Stealth { get; set; }
         public int Persuasion { get; set; }
-        public int AnimalHandling { get; set; } 
+        public int AnimalHandling { get; set; }
 
         // Прочее
         public int BonusOwnership { get; set; }
         public int DiceHit { get; set; }
         public int NumDiceHit { get; set; }
+        
+        public static ParamsResponse FromEntity(ParamsEntity entity)
+        {
+            return new ParamsResponse
+            {
+                Id = entity.Id,
+                PlayerId = entity.PlayerId,
+                HeroId = entity.HeroId,
+                Speed = entity.Speed,
+                Strength = entity.Strength,
+                Agility = entity.Agility,
+                Stamina = entity.Stamina,
+                Intelligence = entity.Intelligence,
+                Wisdom = entity.Wisdom,
+                Charisma = entity.Charisma,
+                SpasStrength = entity.SpasStrength,
+                SpasAgility = entity.SpasAgility,
+                SpasStamina = entity.SpasStamina,
+                SpasIntelligence = entity.SpasIntelligence,
+                SpasWisdom = entity.SpasWisdom,
+                SpasCharisma = entity.SpasCharisma,
+                Acrobatics = entity.Acrobatics,
+                Analysis = entity.Analysis,
+                Athletics = entity.Athletics,
+                Perception = entity.Perception,
+                Survival = entity.Survival,
+                Performance = entity.Performance,
+                Intimidation = entity.Intimidation,
+                History = entity.History,
+                SleightOfHand = entity.SleightOfHand,
+                Magic = entity.Magic,
+                Medicine = entity.Medicine,
+                Deception = entity.Deception,
+                Nature = entity.Nature,
+                Insight = entity.Insight,
+                Religion = entity.Religion,
+                Stealth = entity.Stealth,
+                Persuasion = entity.Persuasion,
+                AnimalHandling = entity.AnimalHandling,
+                BonusOwnership = entity.BonusOwnership,
+                DiceHit = entity.DiceHit,
+                NumDiceHit = entity.NumDiceHit
+            };
+        }
     }
 }
