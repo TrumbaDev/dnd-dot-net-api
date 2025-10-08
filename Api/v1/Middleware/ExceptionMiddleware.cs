@@ -26,7 +26,6 @@ namespace DNDApi.Api.v1.Middleware
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    success = false,
                     message = ex.Message,
                     statusCode = StatusCodes.Status404NotFound
                 });
@@ -38,7 +37,6 @@ namespace DNDApi.Api.v1.Middleware
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    success = false,
                     message = "Внутренняя ошибка сервера",
                     statusCode = StatusCodes.Status500InternalServerError
                 });

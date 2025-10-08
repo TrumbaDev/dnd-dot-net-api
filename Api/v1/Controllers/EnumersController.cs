@@ -62,12 +62,8 @@ namespace DNDApi.Api.v1.Controllers
 
             return Ok(new
             {
-                success = true,
-                data = new
-                {
-                    classEnumers,
-                    raceEnumers
-                }
+                classEnumers,
+                raceEnumers
             });
         }
     }

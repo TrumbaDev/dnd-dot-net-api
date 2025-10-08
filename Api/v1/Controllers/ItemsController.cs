@@ -24,8 +24,7 @@ namespace DNDApi.Api.v1.Controllers
             ArmorsEntity[] armors = _context.Armors.ToArray();
             return Ok(new
             {
-                success = true,
-                data = armors
+                armors
             });
         }
 
@@ -37,8 +36,7 @@ namespace DNDApi.Api.v1.Controllers
             WeaponsEntity[] weapons = _context.Weapons.ToArray();
             return Ok(new
             {
-                success = true,
-                data = weapons
+                weapons
             });
         }
 
@@ -50,8 +48,7 @@ namespace DNDApi.Api.v1.Controllers
             PotionEntity[] potions = _context.Potion.ToArray();
             return Ok(new
             {
-                success = true,
-                data = potions
+                potions
             });
         }
 
@@ -63,8 +60,7 @@ namespace DNDApi.Api.v1.Controllers
             OthersEntity[] others = _context.Others.ToArray();
             return Ok(new
             {
-                success = true,
-                data = others
+                others
             });
         }
 
@@ -76,8 +72,7 @@ namespace DNDApi.Api.v1.Controllers
             FoodsEntity[] foods = _context.Foods.ToArray();
             return Ok(new
             {
-                success = true,
-                data = foods
+                foods
             });
         }
     }
