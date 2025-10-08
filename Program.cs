@@ -1,6 +1,7 @@
 using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
+using DNDApi.Api.v1.Middleware;
 using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
@@ -64,6 +65,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 // Выводим все роуты для дебага

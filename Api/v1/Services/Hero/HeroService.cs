@@ -14,9 +14,9 @@ namespace DNDApi.Api.v1.Services.Hero
             _context = context;
         }
 
-        public async Task<HeroEntity> GetById(int id)
+        public async Task<HeroEntity> GetById(int id, int userId)
         {
-            return await _context.Hero.Where(h => h.HeroId == id).FirstOrDefaultAsync();
+            return await _context.Hero.Where(h => h.HeroId == id && h.UserId == userId).FirstOrDefaultAsync();
         }
     }
 }

@@ -33,8 +33,25 @@ namespace DNDApi.Api.v1.Services
                 expires: DateTime.UtcNow.AddHours(Convert.ToDouble(_configuration["Jwt:ExpireHours"] ?? "24")),
                 signingCredentials: credentials
             );
-            
+
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public static int GetUserIdFromPrincipal(ClaimsPrincipal user)
+        {
+            var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                throw new SecurityTokenException("Claim с ID пользователя не найден в токене");
+            }
+
+            if (!int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new SecurityTokenException("ID пользователя в токене не является числом");
+            }
+            
+            return userId;
         }
     }
 }

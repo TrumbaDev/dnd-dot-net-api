@@ -4,6 +4,6 @@ namespace DNDApi.Api.v1.Contracts.Hero
 {
     public interface IHeroService
     {
-        Task<HeroEntity> GetById(int id);
+        Task<HeroEntity> GetById(int heroId, int userId);
     }
 }

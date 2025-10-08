@@ -1,5 +1,7 @@
 using DNDApi.Api.v1.Contracts.Hero;
+using DNDApi.Api.v1.Exceptions;
 using DNDApi.Api.v1.Models.Entities.Hero;
+using DNDApi.Api.v1.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,29 +20,23 @@ namespace DNDApi.Api.v1.Controllers
         }
 
         [HttpGet]
-        // [Authorize]
-        [Route("hero/{id}")]
+        [Authorize]
+        [Route("full_hero/{id}")]
         public async Task<IActionResult> GetHero(int id)
         {
-            try
+            int userId = JwtService.GetUserIdFromPrincipal(User);
+            HeroEntity hero = await service.GetById(id, userId);
+
+            if (hero == null)
             {
-                HeroEntity hero = await service.GetById(id);
-                return Ok(new
+                throw new NotFoundException($"Герой с ID {id} не найден");
+            }
+
+            return Ok(new
                 {
                     success = true,
                     data = hero
                 });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
         }
     }
 }
