@@ -45,56 +45,30 @@ namespace DNDApi.Api.v1.Controllers
         [Route("race")]
         public async Task<IActionResult> GetRaceEnumers()
         {
-            try
+            List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
+            return Ok(new
             {
-                List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
-                return Ok(new
-                {
-                    success = true,
-                    data = raceEnumers
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = raceEnumers
+            });
         }
 
         [HttpGet]
         [Route("all")]
         public async Task<IActionResult> GetAllEnumers()
         {
-            try
-            {
-                List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
-                List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
+            List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
+            List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
 
-                return Ok(new
-                {
-                    success = true,
-                    data = new
-                    {
-                        classEnumers,
-                        raceEnumers
-                    }
-                });
-            }
-            catch (System.Exception ex)
+            return Ok(new
             {
-                return StatusCode(500, new
+                success = true,
+                data = new
                 {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                    classEnumers,
+                    raceEnumers
+                }
+            });
         }
     }
 }

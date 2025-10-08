@@ -21,25 +21,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-armors")]
         public IActionResult GetAllArmors()
         {
-            try
+            ArmorsEntity[] armors = _context.Armors.ToArray();
+            return Ok(new
             {
-                ArmorsEntity[] armors = _context.Armors.ToArray();
-                return Ok(new
-                {
-                    success = true,
-                    data = armors
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = armors
+            });
         }
 
         [HttpGet]
@@ -47,25 +34,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-weapons")]
         public IActionResult GetAllWeapons()
         {
-            try
+            WeaponsEntity[] weapons = _context.Weapons.ToArray();
+            return Ok(new
             {
-                WeaponsEntity[] weapons = _context.Weapons.ToArray();
-                return Ok(new
-                {
-                    success = true,
-                    data = weapons
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = weapons
+            });
         }
 
         [HttpGet]
@@ -73,25 +47,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-potions")]
         public IActionResult GetAllPotions()
         {
-            try
+            PotionEntity[] potions = _context.Potion.ToArray();
+            return Ok(new
             {
-                PotionEntity[] potions = _context.Potion.ToArray();
-                return Ok(new
-                {
-                    success = true,
-                    data = potions
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = potions
+            });
         }
 
         [HttpGet]
@@ -99,25 +60,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-others")]
         public IActionResult GetAllOthers()
         {
-            try
+            OthersEntity[] others = _context.Others.ToArray();
+            return Ok(new
             {
-                OthersEntity[] others = _context.Others.ToArray();
-                return Ok(new
-                {
-                    success = true,
-                    data = others
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = others
+            });
         }
 
         [HttpGet]
@@ -125,25 +73,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-foods")]
         public IActionResult GetAllFoods()
         {
-            try
+            FoodsEntity[] foods = _context.Foods.ToArray();
+            return Ok(new
             {
-                FoodsEntity[] foods = _context.Foods.ToArray();
-                return Ok(new
-                {
-                    success = true,
-                    data = foods
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = foods
+            });
         }
     }
 }
