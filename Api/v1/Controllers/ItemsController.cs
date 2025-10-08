@@ -1,7 +1,9 @@
 using DNDApi.Api.v1.Data;
+using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.Models.Entities.Items;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DNDApi.Api.v1.Controllers
 {
@@ -21,7 +23,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-armors")]
         public IActionResult GetAllArmors()
         {
-            ArmorsEntity[] armors = _context.Armors.ToArray();
+            List<ArmorsEntity> armorsEntities = _context.Armors.ToList();
+            List<ArmorResponse> armors = armorsEntities.Select(a => ArmorResponse.FromEntity(a)).ToList();
             return Ok(new
             {
                 armors
@@ -33,7 +36,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-weapons")]
         public IActionResult GetAllWeapons()
         {
-            WeaponsEntity[] weapons = _context.Weapons.ToArray();
+            List<WeaponsEntity> weaponsEntities = _context.Weapons.ToList();
+            List<WeaponResponse> weapons = weaponsEntities.Select(w => WeaponResponse.FromEntity(w)).ToList();
             return Ok(new
             {
                 weapons
@@ -45,7 +49,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-potions")]
         public IActionResult GetAllPotions()
         {
-            PotionEntity[] potions = _context.Potion.ToArray();
+            List<PotionEntity> potionEntities = _context.Potion.ToList();
+            List<PotionResponse> potions = potionEntities.Select(p => PotionResponse.FromEntity(p)).ToList();
             return Ok(new
             {
                 potions
@@ -57,7 +62,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-others")]
         public IActionResult GetAllOthers()
         {
-            OthersEntity[] others = _context.Others.ToArray();
+            List<OthersEntity> othersEntities = _context.Others.ToList();
+            List<OtherResponse> others = othersEntities.Select(o => OtherResponse.FromEntity(o)).ToList();
             return Ok(new
             {
                 others
@@ -69,7 +75,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-foods")]
         public IActionResult GetAllFoods()
         {
-            FoodsEntity[] foods = _context.Foods.ToArray();
+            List<FoodsEntity> foodsEntities = _context.Foods.ToList();
+            List<FoodResponse> foods = _context.Foods.ToList().Select(f => FoodResponse.FromEntity(f)).ToList();
             return Ok(new
             {
                 foods
