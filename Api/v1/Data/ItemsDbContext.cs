@@ -16,6 +16,7 @@ namespace DNDApi.Api.v1.Data
         public DbSet<PotionEntity> Potion { get; set; }
 
         public DbSet<FoodsEntity> Foods { get; set; }
+        public DbSet<PlayerItemsEntity> PlayerItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,28 +43,40 @@ namespace DNDApi.Api.v1.Data
             modelBuilder.Entity<OthersEntity>(entity =>
             {
                 entity.ToTable("other_items");
-                
+
                 entity.HasKey(e => e.Id);
-                
+
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<PotionEntity>(entity =>
             {
                 entity.ToTable("potion_table");
-                
+
                 entity.HasKey(e => e.Id);
-                
+
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<FoodsEntity>(entity =>
             {
                 entity.ToTable("food_table");
-                
+
                 entity.HasKey(e => e.Id);
-                
+
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<PlayerItemsEntity>(entity =>
+            {
+                entity.ToTable("player_items");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.HasOne(pi => pi.Armor)
+                .WithMany()
+                .HasForeignKey(pi => pi.ItemId)
+                .HasPrincipalKey(a => a.Id);
             });
         }
     }
