@@ -29,7 +29,7 @@ namespace DNDApi.Api.v1.Models.Entities.Items
         [Required]
         [MaxLength(25)]
         [Column("itemtype")]
-        public string ItemType { get; set; }
+        public string ItemType { get; set; } = string.Empty;
 
         public virtual ArmorsEntity? Armor { get; set; }
         public virtual WeaponsEntity? Weapon { get; set; }

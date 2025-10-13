@@ -13,10 +13,10 @@ namespace DNDApi.Api.v1.Models.Entities.Items
         [Required]
         [MaxLength(50)]
         [Column("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [MaxLength(500)]
         [Column("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }
