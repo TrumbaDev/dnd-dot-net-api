@@ -1,4 +1,5 @@
 using DNDApi.Api.v1.Contracts.Hero;
+using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.DTO.HeroDTO;
 using DNDApi.Api.v1.DTO.Items;
@@ -10,17 +11,17 @@ namespace DNDApi.Api.v1.Services.Hero
     public class HeroService : IHeroService
     {
         private readonly HeroDbContext _context;
-        private readonly ItemsDbContext _itemsContext;
+        private readonly IItemsService _itemsService;
 
-        public HeroService(HeroDbContext context, ItemsDbContext itemsContext)
+        public HeroService(HeroDbContext context, IItemsService itemsService)
         {
             _context = context;
-            _itemsContext = itemsContext;
+            _itemsService = itemsService;
         }
 
         public async Task<HeroResponse> GetById(int id, int userId)
         {
-            return await _context.Hero
+            HeroResponse hero = await _context.Hero
                  .Where(h => h.HeroId == id && h.UserId == userId)
                  .Select(hero => new HeroResponse
                  {
@@ -35,14 +36,19 @@ namespace DNDApi.Api.v1.Services.Hero
                      HeroParams = _context.Params
                          .Where(p => p.HeroId == hero.HeroId)
                          .Select(p => ParamsResponse.FromEntity(p))
-                         .FirstOrDefault() ?? new ParamsResponse(),
-                     HeroArmors = _itemsContext.PlayerItems
-                        .Where(i => i.HeroId == hero.HeroId && i.PlayerId == userId && i.ItemType == "armor")
-                        .Include(pi => pi.Armor)
-                        .Select(pi => ArmorResponse.FromEntity(pi.Armor))
-                        .ToList()
+                         .FirstOrDefault() ?? new ParamsResponse()
                  })
                  .FirstOrDefaultAsync() ?? throw new NotFoundException($"Герой с ID {id} не найден");
+
+            PlayerItemsResponse playerItems = await _itemsService.GetHeroItemsAsync(id, userId);
+
+            hero.HeroArmors = playerItems.Armors;
+            hero.HeroWeapons = playerItems.Weapons;
+            hero.HeroPotions = playerItems.Potions;
+            hero.HeroFoods = playerItems.Foods;
+            hero.HeroOthers = playerItems.Others;
+
+            return hero;
         }
     }
 }

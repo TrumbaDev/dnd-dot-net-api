@@ -1,4 +1,5 @@
 using DNDApi.Api.v1.Contracts.Hero;
+using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
@@ -6,6 +7,7 @@ using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
 using DNDApi.Api.v1.Services.Hero;
+using DNDApi.Api.v1.Services.Items;
 using DNDApi.Api.v1.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +38,7 @@ builder.Services.AddDbContext<HeroDbContext>(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHeroService, HeroService>();
+builder.Services.AddScoped<IItemsService, ItemsService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
 builder.Services.AddScoped<EnumerService>();

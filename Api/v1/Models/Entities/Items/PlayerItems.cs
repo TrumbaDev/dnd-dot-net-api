@@ -31,6 +31,10 @@ namespace DNDApi.Api.v1.Models.Entities.Items
         [Column("itemtype")]
         public string ItemType { get; set; }
 
-        public virtual ArmorsEntity Armor { get; set; }
+        public virtual ArmorsEntity? Armor { get; set; }
+        public virtual WeaponsEntity? Weapon { get; set; }
+        public virtual PotionEntity? Potion { get; set; }
+        public virtual FoodsEntity? Food { get; set; }
+        public virtual OthersEntity? Other { get; set; }
     }
 }

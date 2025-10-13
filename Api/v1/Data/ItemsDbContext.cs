@@ -74,9 +74,34 @@ namespace DNDApi.Api.v1.Data
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.HasOne(pi => pi.Armor)
-                .WithMany()
-                .HasForeignKey(pi => pi.ItemId)
-                .HasPrincipalKey(a => a.Id);
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ItemId)
+                    .HasPrincipalKey(a => a.Id)
+                    .IsRequired(false);
+
+                entity.HasOne(pi => pi.Weapon)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ItemId)
+                    .HasPrincipalKey(w => w.Id)
+                    .IsRequired(false);
+
+                entity.HasOne(pi => pi.Potion)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ItemId)
+                    .HasPrincipalKey(p => p.Id)
+                    .IsRequired(false);
+
+                entity.HasOne(pi => pi.Food)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ItemId)
+                    .HasPrincipalKey(f => f.Id)
+                    .IsRequired(false);
+
+                entity.HasOne(pi => pi.Other)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ItemId)
+                    .HasPrincipalKey(o => o.Id)
+                    .IsRequired(false);
             });
         }
     }
