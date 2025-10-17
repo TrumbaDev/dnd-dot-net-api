@@ -1,5 +1,6 @@
 using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.Items;
+using DNDApi.Api.v1.Contracts.Spells;
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
@@ -8,6 +9,7 @@ using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
 using DNDApi.Api.v1.Services.Hero;
 using DNDApi.Api.v1.Services.Items;
+using DNDApi.Api.v1.Services.Spells;
 using DNDApi.Api.v1.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -35,10 +37,13 @@ builder.Services.AddDbContext<EnumersDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<HeroDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<SpellsDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<IItemsService, ItemsService>();
+builder.Services.AddScoped<ISpellsService, SpellsService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
 builder.Services.AddScoped<EnumerService>();
@@ -91,6 +96,9 @@ using (var scope = app.Services.CreateScope())
 
     var heroDbContext = scope.ServiceProvider.GetRequiredService<HeroDbContext>();
     heroDbContext.Database.EnsureCreated();
+
+    var SpellsDbContext = scope.ServiceProvider.GetRequiredService<SpellsDbContext>();
+    SpellsDbContext.Database.EnsureCreated();
 }
 
 app.Run();

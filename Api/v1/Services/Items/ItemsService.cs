@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.DTO.Items;
@@ -18,7 +17,7 @@ namespace DNDApi.Api.v1.Services.Items
 
         public async Task<PlayerItemsResponse> GetHeroItemsAsync(int heroID, int userId)
         {
-            var playerItems = await _context.PlayerItems
+            List<PlayerItemsEntity> playerItems = await _context.PlayerItems
                 .Where(i => i.HeroId == heroID && i.PlayerId == userId)
                 .Include(pi => pi.Armor)
                 .Include(pi => pi.Weapon)
