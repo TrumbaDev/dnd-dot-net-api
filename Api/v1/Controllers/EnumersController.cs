@@ -20,25 +20,12 @@ namespace DNDApi.Api.v1.Controllers
         [Route("class")]
         public async Task<IActionResult> GetClassEnumers()
         {
-            try
+            List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
+            return Ok(new
             {
-                List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
-                return Ok(new
-                {
-                    success = true,
-                    data = classEnumers
-                });
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Error durring authentication",
-                    error = ex.Message,
-                    details = ex.InnerException?.Message
-                });
-            }
+                success = true,
+                data = classEnumers
+            });
         }
 
         [HttpGet]
