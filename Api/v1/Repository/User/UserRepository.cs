@@ -3,7 +3,7 @@ using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Exceptions;
 using DNDApi.Api.v1.Models.Entities;
 
-namespace DNDApi.Api.v1.Reposiroty.User
+namespace DNDApi.Api.v1.Repository.User
 {
     public class UserRepository : IUserRepository
     {

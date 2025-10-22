@@ -1,3 +1,4 @@
+using DNDApi.Api.v1.Contracts.Enumers;
 using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Contracts.Spells;
@@ -5,7 +6,8 @@ using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
 using DNDApi.Api.v1.Models.Entities;
-using DNDApi.Api.v1.Reposiroty.User;
+using DNDApi.Api.v1.Repository.Enumers;
+using DNDApi.Api.v1.Repository.User;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
 using DNDApi.Api.v1.Services.Hero;
@@ -41,12 +43,12 @@ builder.Services.AddDbContext<SpellsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IEnumersRepository, EnumersRepository>();
 builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<IItemsService, ItemsService>();
 builder.Services.AddScoped<ISpellsService, SpellsService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
-builder.Services.AddScoped<EnumerService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

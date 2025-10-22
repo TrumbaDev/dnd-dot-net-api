@@ -1,6 +1,5 @@
+using DNDApi.Api.v1.Contracts.Enumers;
 using DNDApi.Api.v1.Models.Entities.Enumers;
-using DNDApi.Api.v1.Services.Enumers;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DNDApi.Api.v1.Controllers
@@ -9,22 +8,21 @@ namespace DNDApi.Api.v1.Controllers
     [Route("api/v1/[controller]")]
     public class EnumersController : ControllerBase
     {
-        private readonly EnumerService _service;
+        private readonly IEnumersRepository _repository;
 
-        public EnumersController(EnumerService service)
+        public EnumersController(IEnumersRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
 
         [HttpGet]
         [Route("class")]
         public async Task<IActionResult> GetClassEnumers()
         {
-            List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
+            List<ClassEnumerEnity> classEnumers = await _repository.GetClassEnumersAsync();
             return Ok(new
             {
-                success = true,
-                data = classEnumers
+                classEnumers
             });
         }
 
@@ -32,11 +30,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("race")]
         public async Task<IActionResult> GetRaceEnumers()
         {
-            List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
+            List<RaceEnumerEnity> raceEnumers = await _repository.GetRaceEnumersAsync();
             return Ok(new
             {
-                success = true,
-                data = raceEnumers
+                raceEnumers
             });
         }
 
@@ -44,8 +41,8 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all")]
         public async Task<IActionResult> GetAllEnumers()
         {
-            List<ClassEnumerEnity> classEnumers = await _service.GetClassEnumers();
-            List<RaceEnumerEnity> raceEnumers = await _service.GetRaceEnumers();
+            List<ClassEnumerEnity> classEnumers = await _repository.GetClassEnumersAsync();
+            List<RaceEnumerEnity> raceEnumers = await _repository.GetRaceEnumersAsync();
 
             return Ok(new
             {
