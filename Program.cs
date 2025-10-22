@@ -7,9 +7,9 @@ using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
 using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Repository.Enumers;
+using DNDApi.Api.v1.Repository.Items;
 using DNDApi.Api.v1.Repository.User;
 using DNDApi.Api.v1.Services;
-using DNDApi.Api.v1.Services.Enumers;
 using DNDApi.Api.v1.Services.Hero;
 using DNDApi.Api.v1.Services.Items;
 using DNDApi.Api.v1.Services.Spells;
@@ -44,6 +44,7 @@ builder.Services.AddDbContext<SpellsDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEnumersRepository, EnumersRepository>();
+builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<IItemsService, ItemsService>();
 builder.Services.AddScoped<ISpellsService, SpellsService>();

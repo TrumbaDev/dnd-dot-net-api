@@ -1,9 +1,6 @@
-using DNDApi.Api.v1.Data;
-using DNDApi.Api.v1.DTO.Items;
-using DNDApi.Api.v1.Models.Entities.Items;
+using DNDApi.Api.v1.Contracts.Items;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DNDApi.Api.v1.Controllers
 {
@@ -11,11 +8,11 @@ namespace DNDApi.Api.v1.Controllers
     [Route("api/v1/[controller]")]
     public class ItemsController : ControllerBase
     {
-        private readonly ItemsDbContext _context;
+        private readonly IItemsRepository _repository;
 
-        public ItemsController(ItemsDbContext context)
+        public ItemsController(IItemsRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpGet]
@@ -23,11 +20,9 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-armors")]
         public IActionResult GetAllArmors()
         {
-            List<ArmorsEntity> armorsEntities = _context.Armors.ToList();
-            List<ArmorResponse> armors = armorsEntities.Select(a => ArmorResponse.FromEntity(a)).ToList();
             return Ok(new
             {
-                armors
+                armors = _repository.GetAllArmors()
             });
         }
 
@@ -36,11 +31,9 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-weapons")]
         public IActionResult GetAllWeapons()
         {
-            List<WeaponsEntity> weaponsEntities = _context.Weapons.ToList();
-            List<WeaponResponse> weapons = weaponsEntities.Select(w => WeaponResponse.FromEntity(w)).ToList();
             return Ok(new
             {
-                weapons
+                weapons = _repository.GetAllWeapons()
             });
         }
 
@@ -49,11 +42,9 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-potions")]
         public IActionResult GetAllPotions()
         {
-            List<PotionEntity> potionEntities = _context.Potion.ToList();
-            List<PotionResponse> potions = potionEntities.Select(p => PotionResponse.FromEntity(p)).ToList();
             return Ok(new
             {
-                potions
+                potions = _repository.GetAllPotion()
             });
         }
 
@@ -62,11 +53,9 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-others")]
         public IActionResult GetAllOthers()
         {
-            List<OthersEntity> othersEntities = _context.Others.ToList();
-            List<OtherResponse> others = othersEntities.Select(o => OtherResponse.FromEntity(o)).ToList();
             return Ok(new
             {
-                others
+                others = _repository.GetAllOther()
             });
         }
 
@@ -75,11 +64,9 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-foods")]
         public IActionResult GetAllFoods()
         {
-            List<FoodsEntity> foodsEntities = _context.Foods.ToList();
-            List<FoodResponse> foods = _context.Foods.ToList().Select(f => FoodResponse.FromEntity(f)).ToList();
             return Ok(new
             {
-                foods
+                foods = _repository.GetAllFood()
             });
         }
     }
