@@ -1,13 +1,13 @@
-using DNDApi.Api.v1.DTO.Items;
+using DNDApi.Api.v1.Models.Entities.Items;
 
 namespace DNDApi.Api.v1.Contracts.Items
 {
     public interface IItemsRepository
     {
-        List<ArmorResponse> GetAllArmors();
-        List<WeaponResponse> GetAllWeapons();
-        List<PotionResponse> GetAllPotion();
-        List<FoodResponse> GetAllFood();
-        List<OtherResponse> GetAllOther();
+        List<ArmorsEntity> GetAllArmors();
+        List<WeaponsEntity> GetAllWeapons();
+        List<PotionEntity> GetAllPotion();
+        List<FoodsEntity> GetAllFood();
+        List<OthersEntity> GetAllOther();
     }
 }

@@ -1,4 +1,5 @@
 using DNDApi.Api.v1.Contracts.Items;
+using DNDApi.Api.v1.DTO.Items;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-armors")]
         public IActionResult GetAllArmors()
         {
+            List<ArmorResponse> armors = _repository.GetAllArmors().Select(ArmorResponse.FromEntity).ToList();
             return Ok(new
             {
-                armors = _repository.GetAllArmors()
+                armors
             });
         }
 
@@ -31,9 +33,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-weapons")]
         public IActionResult GetAllWeapons()
         {
+            List<WeaponResponse> weapons = _repository.GetAllWeapons().Select(WeaponResponse.FromEntity).ToList();
             return Ok(new
             {
-                weapons = _repository.GetAllWeapons()
+                weapons
             });
         }
 
@@ -42,9 +45,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-potions")]
         public IActionResult GetAllPotions()
         {
+            List<PotionResponse> potions = _repository.GetAllPotion().Select(PotionResponse.FromEntity).ToList();
             return Ok(new
             {
-                potions = _repository.GetAllPotion()
+                potions
             });
         }
 
@@ -53,9 +57,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-others")]
         public IActionResult GetAllOthers()
         {
+            List<OtherResponse> others = _repository.GetAllOther().Select(OtherResponse.FromEntity).ToList();
             return Ok(new
             {
-                others = _repository.GetAllOther()
+                others
             });
         }
 
@@ -64,9 +69,10 @@ namespace DNDApi.Api.v1.Controllers
         [Route("all-foods")]
         public IActionResult GetAllFoods()
         {
+            List<FoodResponse> foods = _repository.GetAllFood().Select(FoodResponse.FromEntity).ToList();
             return Ok(new
             {
-                foods = _repository.GetAllFood()
+                foods
             });
         }
     }

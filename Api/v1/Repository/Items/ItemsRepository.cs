@@ -1,6 +1,5 @@
 using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Data;
-using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.Models.Entities.Items;
 
 namespace DNDApi.Api.v1.Repository.Items
@@ -14,34 +13,29 @@ namespace DNDApi.Api.v1.Repository.Items
             _context = context;
         }
 
-        public List<ArmorResponse> GetAllArmors()
+        public List<ArmorsEntity> GetAllArmors()
         {
-            List<ArmorsEntity> armors = _context.Armors.ToList();
-            return armors.Select(ArmorResponse.FromEntity).ToList();
+            return _context.Armors.ToList();
         }
 
-        public List<WeaponResponse> GetAllWeapons()
+        public List<WeaponsEntity> GetAllWeapons()
         {
-            List<WeaponsEntity> weapons = _context.Weapons.ToList();
-            return weapons.Select(WeaponResponse.FromEntity).ToList();
+            return _context.Weapons.ToList();
         }
 
-        public List<PotionResponse> GetAllPotion()
+        public List<PotionEntity> GetAllPotion()
         {
-            List<PotionEntity> potions = _context.Potion.ToList();
-            return potions.Select(PotionResponse.FromEntity).ToList();
+            return _context.Potion.ToList();
         }
 
-        public List<FoodResponse> GetAllFood()
+        public List<FoodsEntity> GetAllFood()
         {
-            List<FoodsEntity> foods = _context.Foods.ToList();
-            return foods.Select(FoodResponse.FromEntity).ToList();
+            return _context.Foods.ToList();
         }
-        
-        public List<OtherResponse> GetAllOther()
+
+        public List<OthersEntity> GetAllOther()
         {
-            List<OthersEntity> others = _context.Others.ToList();
-            return others.Select(OtherResponse.FromEntity).ToList();
+            return _context.Others.ToList();
         }
     }
 }
