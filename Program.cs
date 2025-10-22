@@ -5,12 +5,12 @@ using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
 using DNDApi.Api.v1.Models.Entities;
+using DNDApi.Api.v1.Reposiroty.User;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Enumers;
 using DNDApi.Api.v1.Services.Hero;
 using DNDApi.Api.v1.Services.Items;
 using DNDApi.Api.v1.Services.Spells;
-using DNDApi.Api.v1.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +40,7 @@ builder.Services.AddDbContext<HeroDbContext>(options =>
 builder.Services.AddDbContext<SpellsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<IItemsService, ItemsService>();
 builder.Services.AddScoped<ISpellsService, SpellsService>();

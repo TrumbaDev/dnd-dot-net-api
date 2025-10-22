@@ -1,5 +1,6 @@
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.DTO.AuthDTO;
+using DNDApi.Api.v1.Exceptions;
 using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Services;
 using Microsoft.AspNetCore.Identity;
@@ -11,27 +12,31 @@ namespace DNDApi.Api.v1.Controllers
     [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<UserEntity> _passwordHasher;
         private readonly JwtService _jwtService;
 
         public AuthController(
-            IUserService userService,
+            IUserRepository userRepository,
             IPasswordHasher<UserEntity> passwordHasher,
             JwtService jwtService
         )
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _jwtService = jwtService;
         }
 
 
         [HttpPost("signin")]
-        public async Task<IActionResult> SignIn([FromBody] LoginRequest request)
+        public IActionResult SignIn([FromBody] LoginRequest request)
         {
-            UserEntity user = await _userService.GetByUserNameAsync(MD5Service.CalculateMD5(request.Username));
-            if (user == null)
+            UserEntity? user = null;
+            try
+            {
+                user = _userRepository.GetUserByName(MD5Service.CalculateMD5(request.Username));
+            }
+            catch (NotFoundException)
             {
                 return Unauthorized(new { message = "Неверные учетные данные" });
             }
