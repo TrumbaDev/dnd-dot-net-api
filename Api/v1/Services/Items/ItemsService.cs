@@ -1,3 +1,4 @@
+using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.Models.Entities.Items;
 
@@ -5,6 +6,13 @@ namespace DNDApi.Api.v1.Services.Items
 {
     public class ItemsService
     {
+        private readonly IItemsRepository _itemsRepository;
+
+        public ItemsService(IItemsRepository itemsRepository)
+        {
+            _itemsRepository = itemsRepository;
+        }
+
         public PlayerItemsResponse MapItems(List<PlayerItemsEntity> playerItems)
         {
             List<ArmorResponse> armors = playerItems
@@ -40,6 +48,18 @@ namespace DNDApi.Api.v1.Services.Items
                 Foods = foods,
                 Others = others
             };
+        }
+
+        public async Task<Dictionary<int, PlayerItemsResponse>> GetHeroesItemsAsync(List<int> heroIds, int userId)
+        {
+            List<PlayerItemsEntity> playerItems = await _itemsRepository.GetHeroesItemsAsync(heroIds, userId);
+
+            return playerItems
+                .GroupBy(pi => pi.HeroId)
+                .ToDictionary(
+                    g => g.Key,
+                    g => MapItems(g.ToList())
+                );
         }
     }
 }

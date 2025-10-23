@@ -39,10 +39,22 @@ namespace DNDApi.Api.v1.Repository.Items
             return _context.Others.ToList();
         }
 
-        public Task<List<PlayerItemsEntity>> GetHeroItemsAsync(int heroId, int userId)
+        public async Task<List<PlayerItemsEntity>> GetHeroItemsAsync(int heroId, int userId)
         {
-            return _context.PlayerItems
+            return await _context.PlayerItems
                 .Where(i => i.HeroId == heroId && i.PlayerId == userId)
+                .Include(pi => pi.Armor)
+                .Include(pi => pi.Weapon)
+                .Include(pi => pi.Potion)
+                .Include(pi => pi.Food)
+                .Include(pi => pi.Other)
+                .ToListAsync();
+        }
+
+        public async Task<List<PlayerItemsEntity>> GetHeroesItemsAsync(List<int> heroIds, int userId)
+        {
+            return await _context.PlayerItems
+                .Where(i => heroIds.Contains(i.HeroId) && i.PlayerId == userId)
                 .Include(pi => pi.Armor)
                 .Include(pi => pi.Weapon)
                 .Include(pi => pi.Potion)

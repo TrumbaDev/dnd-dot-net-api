@@ -1,7 +1,6 @@
 using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Contracts.Spells;
-using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.DTO.HeroDTO;
 using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.DTO.Spells;
@@ -13,7 +12,6 @@ namespace DNDApi.Api.v1.Services.Hero
 {
     public class HeroService : IHeroService
     {
-        private readonly HeroDbContext _context;
         private readonly IHeroRepository _heroRepository;
         private readonly IItemsRepository _itemsRepository;
         private readonly ISpellsRepository _spellsRepository;
@@ -21,14 +19,12 @@ namespace DNDApi.Api.v1.Services.Hero
         private readonly SpellsService _spellsService;
 
         public HeroService(
-            HeroDbContext context,
             IHeroRepository heroRepository,
             IItemsRepository itemsRepository,
             ISpellsRepository spellsRepository,
             ItemsService itemsService,
             SpellsService spellsService)
         {
-            _context = context;
             _heroRepository = heroRepository;
             _itemsRepository = itemsRepository;
             _spellsRepository = spellsRepository;
@@ -64,6 +60,40 @@ namespace DNDApi.Api.v1.Services.Hero
             hero.HeroOthers = playerItems.Others;
 
             return hero;
+        }
+
+        public async Task<List<HeroResponse>> GetHeroes(int userId)
+        {
+            List<HeroEntity> heroesEntities = _heroRepository.GetByUserIdWithParams(userId);
+
+            List<int> heroIds = heroesEntities.Select(h => h.HeroId).ToList();
+
+            Task<Dictionary<int, PlayerSpellsResponse>> spellsTask = _spellsService.GetHeroesSpellsAsync(heroIds, userId);
+            Task<Dictionary<int, PlayerItemsResponse>> itemsTask = _itemsService.GetHeroesItemsAsync(heroIds, userId);
+
+            await Task.WhenAll(spellsTask, itemsTask);
+
+            Dictionary<int, PlayerSpellsResponse> allSpells = spellsTask.Result;
+            Dictionary<int, PlayerItemsResponse> allItems = itemsTask.Result;
+
+            return heroesEntities.Select(heroEntity => new HeroResponse
+            {
+                HeroID = heroEntity.HeroId,
+                UserID = heroEntity.UserId,
+                Race = heroEntity.Race,
+                HeroName = heroEntity.HeroName,
+                HeroSide = heroEntity.HeroSide,
+                HeroBorn = heroEntity.HeroBorn,
+                HeroHistory = heroEntity.HeroHistory,
+                HeroAvatar = heroEntity.HeroAvatar,
+                HeroParams = heroEntity.Params != null ? ParamsResponse.FromEntity(heroEntity.Params) : new ParamsResponse(),
+                HeroSpells = allSpells.GetValueOrDefault(heroEntity.HeroId)?.Spells ?? [],
+                HeroArmors = allItems.GetValueOrDefault(heroEntity.HeroId)?.Armors ?? [],
+                HeroWeapons = allItems.GetValueOrDefault(heroEntity.HeroId)?.Weapons ?? [],
+                HeroPotions = allItems.GetValueOrDefault(heroEntity.HeroId)?.Potions ?? [],
+                HeroFoods = allItems.GetValueOrDefault(heroEntity.HeroId)?.Foods ?? [],
+                HeroOthers = allItems.GetValueOrDefault(heroEntity.HeroId)?.Others ?? []
+            }).ToList();
         }
     }
 }

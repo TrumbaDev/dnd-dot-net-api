@@ -5,5 +5,7 @@ namespace DNDApi.Api.v1.Contracts.Hero
     public interface IHeroService
     {
         Task<HeroResponse> GetById(int heroId, int userId);
+
+        Task<List<HeroResponse>> GetHeroes(int userId);
     }
 }
