@@ -23,7 +23,7 @@ namespace DNDApi.Api.v1.Data
                 entity.HasOne(ps => ps.Spell)
                     .WithMany()
                     .HasForeignKey(ps => ps.SpellId)
-                    .HasPrincipalKey(a => a.Id)
+                    .HasPrincipalKey(s => s.Id)
                     .IsRequired(false);
             });
 

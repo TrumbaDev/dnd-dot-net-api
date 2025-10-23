@@ -34,13 +34,7 @@ namespace DNDApi.Api.v1.Services.Spells
                 .GroupBy(ps => ps.HeroId)
                 .ToDictionary(
                     g => g.Key,
-                    g => new PlayerSpellsResponse
-                    {
-                        Spells = g
-                            .Where(ps => ps.Spell is not null)
-                            .Select(ps => SpellResponse.FromEntity(ps.Spell!))
-                            .ToList()
-                    }
+                    g => MapSpells(g.ToList())
                 );
         }
     }
