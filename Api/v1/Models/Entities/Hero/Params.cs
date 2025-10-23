@@ -120,5 +120,7 @@ namespace DNDApi.Api.v1.Models.Entities.Hero
 
         [Column("num_dice_hit")]
         public int NumDiceHit { get; set; }
+
+        public virtual HeroEntity? Hero { get; set; }
     }
 }

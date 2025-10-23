@@ -7,7 +7,9 @@ using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Middleware;
 using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Repository.Enumers;
+using DNDApi.Api.v1.Repository.Hero;
 using DNDApi.Api.v1.Repository.Items;
+using DNDApi.Api.v1.Repository.Spells;
 using DNDApi.Api.v1.Repository.User;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Hero;
@@ -45,9 +47,11 @@ builder.Services.AddDbContext<SpellsDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEnumersRepository, EnumersRepository>();
 builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
+builder.Services.AddScoped<IHeroRepository, HeroRepository>();
+builder.Services.AddScoped<ISpellsRepository, SpellsRepository>();
 builder.Services.AddScoped<IHeroService, HeroService>();
-builder.Services.AddScoped<IItemsService, ItemsService>();
-builder.Services.AddScoped<ISpellsService, SpellsService>();
+builder.Services.AddScoped<ItemsService>();
+builder.Services.AddScoped<SpellsService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
 

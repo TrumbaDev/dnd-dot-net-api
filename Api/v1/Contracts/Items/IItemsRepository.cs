@@ -9,5 +9,6 @@ namespace DNDApi.Api.v1.Contracts.Items
         List<PotionEntity> GetAllPotion();
         List<FoodsEntity> GetAllFood();
         List<OthersEntity> GetAllOther();
+        Task<List<PlayerItemsEntity>> GetHeroItemsAsync(int heroId, int userId);
     }
 }

@@ -19,6 +19,10 @@ namespace DNDApi.Api.v1.Data
                 entity.ToTable("heroes");
                 entity.HasKey(e => e.HeroId);
                 entity.Property(e => e.HeroId).ValueGeneratedOnAdd();
+                entity.HasOne(h => h.Params)
+                    .WithOne(p => p.Hero)
+                    .HasForeignKey<ParamsEntity>(p => p.HeroId)
+                    .IsRequired(false);
             });
 
             modelBuilder.Entity<ParamsEntity>(entity =>

@@ -40,5 +40,7 @@ namespace DNDApi.Api.v1.Models.Entities.Hero
         [MaxLength(150)]
         [Column("hero_avatar")]
         public string HeroAvatar { get; set; } = string.Empty;
+
+        public virtual ParamsEntity? Params { get; set; }
     }
 }

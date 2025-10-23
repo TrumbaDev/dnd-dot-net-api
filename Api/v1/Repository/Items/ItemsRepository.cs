@@ -1,6 +1,7 @@
 using DNDApi.Api.v1.Contracts.Items;
 using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.Models.Entities.Items;
+using Microsoft.EntityFrameworkCore;
 
 namespace DNDApi.Api.v1.Repository.Items
 {
@@ -36,6 +37,18 @@ namespace DNDApi.Api.v1.Repository.Items
         public List<OthersEntity> GetAllOther()
         {
             return _context.Others.ToList();
+        }
+
+        public Task<List<PlayerItemsEntity>> GetHeroItemsAsync(int heroId, int userId)
+        {
+            return _context.PlayerItems
+                .Where(i => i.HeroId == heroId && i.PlayerId == userId)
+                .Include(pi => pi.Armor)
+                .Include(pi => pi.Weapon)
+                .Include(pi => pi.Potion)
+                .Include(pi => pi.Food)
+                .Include(pi => pi.Other)
+                .ToListAsync();
         }
     }
 }

@@ -5,51 +5,58 @@ using DNDApi.Api.v1.Data;
 using DNDApi.Api.v1.DTO.HeroDTO;
 using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.DTO.Spells;
-using DNDApi.Api.v1.Exceptions;
-using Microsoft.EntityFrameworkCore;
+using DNDApi.Api.v1.Models.Entities.Hero;
+using DNDApi.Api.v1.Services.Items;
+using DNDApi.Api.v1.Services.Spells;
 
 namespace DNDApi.Api.v1.Services.Hero
 {
     public class HeroService : IHeroService
     {
         private readonly HeroDbContext _context;
-        private readonly IItemsService _itemsService;
-        private readonly ISpellsService _spellsService;
+        private readonly IHeroRepository _heroRepository;
+        private readonly IItemsRepository _itemsRepository;
+        private readonly ISpellsRepository _spellsRepository;
+        private readonly ItemsService _itemsService;
+        private readonly SpellsService _spellsService;
 
-        public HeroService(HeroDbContext context, IItemsService itemsService, ISpellsService spellsService)
+        public HeroService(
+            HeroDbContext context,
+            IHeroRepository heroRepository,
+            IItemsRepository itemsRepository,
+            ISpellsRepository spellsRepository,
+            ItemsService itemsService,
+            SpellsService spellsService)
         {
             _context = context;
+            _heroRepository = heroRepository;
+            _itemsRepository = itemsRepository;
+            _spellsRepository = spellsRepository;
             _itemsService = itemsService;
             _spellsService = spellsService;
         }
 
         public async Task<HeroResponse> GetById(int id, int userId)
         {
-            HeroResponse hero = await _context.Hero
-                 .Where(h => h.HeroId == id && h.UserId == userId)
-                 .Select(hero => new HeroResponse
-                 {
-                     HeroID = hero.HeroId,
-                     UserID = hero.UserId,
-                     Race = hero.Race,
-                     HeroName = hero.HeroName,
-                     HeroSide = hero.HeroSide,
-                     HeroBorn = hero.HeroBorn,
-                     HeroHistory = hero.HeroHistory,
-                     HeroAvatar = hero.HeroAvatar,
-                     HeroParams = _context.Params
-                         .Where(p => p.HeroId == hero.HeroId)
-                         .Select(p => ParamsResponse.FromEntity(p))
-                         .FirstOrDefault() ?? new ParamsResponse()
-                 })
-                 .FirstOrDefaultAsync() ?? throw new NotFoundException($"Герой с ID {id} не найден");
+            HeroEntity heroEntity = await _heroRepository.GetByHeroIdWithParams(id, userId);
 
-            PlayerSpellsResponse playerSpells = await _spellsService.GetHeroSpellsAsync(id, userId);
+            HeroResponse hero = new HeroResponse
+            {
+                HeroID = heroEntity.HeroId,
+                UserID = heroEntity.UserId,
+                Race = heroEntity.Race,
+                HeroName = heroEntity.HeroName,
+                HeroSide = heroEntity.HeroSide,
+                HeroBorn = heroEntity.HeroBorn,
+                HeroHistory = heroEntity.HeroHistory,
+                HeroAvatar = heroEntity.HeroAvatar,
+                HeroParams = heroEntity.Params != null ? ParamsResponse.FromEntity(heroEntity.Params) : new ParamsResponse()
+            };
 
+            PlayerSpellsResponse playerSpells = _spellsService.MapSpells(await _spellsRepository.GetHeroSpellsAsync(id, userId));
             hero.HeroSpells = playerSpells.Spells;
 
-            PlayerItemsResponse playerItems = await _itemsService.GetHeroItemsAsync(id, userId);
-
+            PlayerItemsResponse playerItems = _itemsService.MapItems(await _itemsRepository.GetHeroItemsAsync(id, userId));
             hero.HeroArmors = playerItems.Armors;
             hero.HeroWeapons = playerItems.Weapons;
             hero.HeroPotions = playerItems.Potions;
