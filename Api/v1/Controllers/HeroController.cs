@@ -21,7 +21,7 @@ namespace DNDApi.Api.v1.Controllers
         [HttpGet]
         [Authorize]
         [Route("full-hero/{id}")]
-        public async Task<IActionResult> GetHero(int id)
+        public IActionResult GetHero(int id)
         {
             int userId = JwtService.GetUserIdFromPrincipal(User);
 
@@ -34,10 +34,10 @@ namespace DNDApi.Api.v1.Controllers
         [HttpGet]
         [Authorize]
         [Route("full-heroes")]
-        public async Task<IActionResult> GetHeroes()
+        public async Task<IActionResult> GetHeroesAsync()
         {
             int userId = JwtService.GetUserIdFromPrincipal(User);
-            
+
             return Ok(new
             {
                 heroes = await _service.GetHeroesAsync(userId)
