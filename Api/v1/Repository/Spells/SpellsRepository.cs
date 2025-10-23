@@ -14,12 +14,12 @@ namespace DNDApi.Api.v1.Repository.Spells
             _context = context;
         }
 
-        public async Task<List<PlayerSpellsEntity>> GetHeroSpellsAsync(int heroId, int userId)
+        public List<PlayerSpellsEntity> GetHeroSpells(int heroId, int userId)
         {
-            return await _context.PlayerSpells
+            return _context.PlayerSpells
                 .Where(s => s.HeroId == heroId && s.PlayerId == userId)
                 .Include(ps => ps.Spell)
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<List<PlayerSpellsEntity>> GetHeroesSpellsAsync(List<int> heroIds, int userId)

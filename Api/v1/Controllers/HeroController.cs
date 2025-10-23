@@ -27,7 +27,7 @@ namespace DNDApi.Api.v1.Controllers
 
             return Ok(new
             {
-                hero = await _service.GetById(id, userId)
+                hero = _service.GetById(id, userId)
             });
         }
 
@@ -40,7 +40,7 @@ namespace DNDApi.Api.v1.Controllers
             
             return Ok(new
             {
-                heroes = await _service.GetHeroes(userId)
+                heroes = await _service.GetHeroesAsync(userId)
             });
         }
     }

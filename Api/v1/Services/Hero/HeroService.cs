@@ -32,9 +32,9 @@ namespace DNDApi.Api.v1.Services.Hero
             _spellsService = spellsService;
         }
 
-        public async Task<HeroResponse> GetById(int id, int userId)
+        public HeroResponse GetById(int id, int userId)
         {
-            HeroEntity heroEntity = await _heroRepository.GetByHeroIdWithParams(id, userId);
+            HeroEntity heroEntity = _heroRepository.GetByHeroIdWithParams(id, userId);
 
             HeroResponse hero = new HeroResponse
             {
@@ -49,10 +49,10 @@ namespace DNDApi.Api.v1.Services.Hero
                 HeroParams = heroEntity.Params != null ? ParamsResponse.FromEntity(heroEntity.Params) : new ParamsResponse()
             };
 
-            PlayerSpellsResponse playerSpells = _spellsService.MapSpells(await _spellsRepository.GetHeroSpellsAsync(id, userId));
+            PlayerSpellsResponse playerSpells = _spellsService.MapSpells(_spellsRepository.GetHeroSpells(id, userId));
             hero.HeroSpells = playerSpells.Spells;
 
-            PlayerItemsResponse playerItems = _itemsService.MapItems(await _itemsRepository.GetHeroItemsAsync(id, userId));
+            PlayerItemsResponse playerItems = _itemsService.MapItems(_itemsRepository.GetHeroItems(id, userId));
             hero.HeroArmors = playerItems.Armors;
             hero.HeroWeapons = playerItems.Weapons;
             hero.HeroPotions = playerItems.Potions;
@@ -62,7 +62,7 @@ namespace DNDApi.Api.v1.Services.Hero
             return hero;
         }
 
-        public async Task<List<HeroResponse>> GetHeroes(int userId)
+        public async Task<List<HeroResponse>> GetHeroesAsync(int userId)
         {
             List<HeroEntity> heroesEntities = _heroRepository.GetByUserIdWithParams(userId);
 

@@ -15,12 +15,12 @@ namespace DNDApi.Api.v1.Repository.Hero
             _context = context;
         }
 
-        public async Task<HeroEntity> GetByHeroIdWithParams(int heroId, int userId)
+        public HeroEntity GetByHeroIdWithParams(int heroId, int userId)
         {
-            return await _context.Hero
+            return _context.Hero
                 .Include(h => h.Params)
                 .Where(h => h.HeroId == heroId && h.UserId == userId)
-                .FirstOrDefaultAsync() ?? throw new NotFoundException("Hero not found");
+                .FirstOrDefault() ?? throw new NotFoundException("Hero not found");
         }
 
         public List<HeroEntity> GetByUserIdWithParams(int userId)
