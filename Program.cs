@@ -1,6 +1,7 @@
 using DNDApi.Api.v1.Contracts.Enumers;
 using DNDApi.Api.v1.Contracts.Hero;
 using DNDApi.Api.v1.Contracts.Items;
+using DNDApi.Api.v1.Contracts.Passives;
 using DNDApi.Api.v1.Contracts.Spells;
 using DNDApi.Api.v1.Contracts.User;
 using DNDApi.Api.v1.Data;
@@ -9,11 +10,13 @@ using DNDApi.Api.v1.Models.Entities;
 using DNDApi.Api.v1.Repository.Enumers;
 using DNDApi.Api.v1.Repository.Hero;
 using DNDApi.Api.v1.Repository.Items;
+using DNDApi.Api.v1.Repository.Passives;
 using DNDApi.Api.v1.Repository.Spells;
 using DNDApi.Api.v1.Repository.User;
 using DNDApi.Api.v1.Services;
 using DNDApi.Api.v1.Services.Hero;
 using DNDApi.Api.v1.Services.Items;
+using DNDApi.Api.v1.Services.Passives;
 using DNDApi.Api.v1.Services.Spells;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -43,15 +46,19 @@ builder.Services.AddDbContext<HeroDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<SpellsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<PassivesDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEnumersRepository, EnumersRepository>();
 builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 builder.Services.AddScoped<IHeroRepository, HeroRepository>();
 builder.Services.AddScoped<ISpellsRepository, SpellsRepository>();
+builder.Services.AddScoped<IPassivesRepository, PassivesRepository>();
 builder.Services.AddScoped<IHeroService, HeroService>();
 builder.Services.AddScoped<ItemsService>();
 builder.Services.AddScoped<SpellsService>();
+builder.Services.AddScoped<PassivesService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, BCryptPasswordHasher>();
 
@@ -104,8 +111,11 @@ using (var scope = app.Services.CreateScope())
     var heroDbContext = scope.ServiceProvider.GetRequiredService<HeroDbContext>();
     heroDbContext.Database.EnsureCreated();
 
-    var spellsDbContext = scope.ServiceProvider.GetRequiredService<SpellsDbContext>();
-    spellsDbContext.Database.EnsureCreated();
+    var SpellsDbContext = scope.ServiceProvider.GetRequiredService<SpellsDbContext>();
+    SpellsDbContext.Database.EnsureCreated();
+
+    var passivesDbContext = scope.ServiceProvider.GetRequiredService<PassivesDbContext>();
+    passivesDbContext.Database.EnsureCreated();
 }
 
 app.Run();
