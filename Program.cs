@@ -104,8 +104,8 @@ using (var scope = app.Services.CreateScope())
     var heroDbContext = scope.ServiceProvider.GetRequiredService<HeroDbContext>();
     heroDbContext.Database.EnsureCreated();
 
-    var SpellsDbContext = scope.ServiceProvider.GetRequiredService<SpellsDbContext>();
-    SpellsDbContext.Database.EnsureCreated();
+    var spellsDbContext = scope.ServiceProvider.GetRequiredService<SpellsDbContext>();
+    spellsDbContext.Database.EnsureCreated();
 }
 
 app.Run();
