@@ -111,5 +111,22 @@ namespace DNDApi.Api.v1.Services.Hero
                 HeroOthers = allItems.GetValueOrDefault(heroEntity.HeroId)?.Others ?? []
             }).ToList();
         }
+
+        public List<HeroResponse> GetHeroesLight(int userId)
+        {
+            List<HeroEntity> heroesEntities = _heroRepository.GetByUserId(userId);
+
+            return heroesEntities.Select(heroEntity => new HeroResponse
+            {
+                HeroID = heroEntity.HeroId,
+                UserID = heroEntity.UserId,
+                Race = heroEntity.Race,
+                HeroName = heroEntity.HeroName,
+                HeroSide = heroEntity.HeroSide,
+                HeroBorn = heroEntity.HeroBorn,
+                HeroHistory = heroEntity.HeroHistory,
+                HeroAvatar = heroEntity.HeroAvatar
+            }).ToList();
+        }
     }
 }

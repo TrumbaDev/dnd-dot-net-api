@@ -5,6 +5,7 @@ namespace DNDApi.Api.v1.Contracts.Hero
     public interface IHeroRepository
     {
         HeroEntity GetByHeroIdWithParams(int heroId, int userId);
+        List<HeroEntity> GetByUserId(int userId);
         List<HeroEntity> GetByUserIdWithParams(int userId);
     }
 }

@@ -23,6 +23,13 @@ namespace DNDApi.Api.v1.Repository.Hero
                 .FirstOrDefault() ?? throw new NotFoundException("Hero not found");
         }
 
+        public List<HeroEntity> GetByUserId(int userId)
+        {
+            return _context.Hero
+                .Where(h => h.UserId == userId)
+                .ToList();
+        }
+
         public List<HeroEntity> GetByUserIdWithParams(int userId)
         {
             return _context.Hero

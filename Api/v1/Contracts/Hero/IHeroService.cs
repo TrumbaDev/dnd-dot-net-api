@@ -7,5 +7,6 @@ namespace DNDApi.Api.v1.Contracts.Hero
         HeroResponse GetById(int heroId, int userId);
 
         Task<List<HeroResponse>> GetHeroesAsync(int userId);
+        List<HeroResponse> GetHeroesLight(int userId);
     }
 }

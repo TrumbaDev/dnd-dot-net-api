@@ -118,5 +118,18 @@ namespace DNDApi.Api.v1.Controllers
                 heroes = await _service.GetHeroesAsync(userId)
             });
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("full-heroes/light")]
+        public IActionResult GetHeroesLight()
+        {
+            int userId = JwtService.GetUserIdFromPrincipal(User);
+
+            return Ok(new
+            {
+                heroes = _service.GetHeroesLight(userId)
+            });
+        }
     }
 }
