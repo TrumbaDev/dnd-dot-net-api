@@ -1,4 +1,5 @@
 using DNDApi.Api.v1.Contracts.Items;
+using DNDApi.Api.v1.DTO.HeroDTO;
 using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.Models.Entities.Items;
 
@@ -15,29 +16,29 @@ namespace DNDApi.Api.v1.Services.Items
 
         public PlayerItemsResponse MapItems(List<PlayerItemsEntity> playerItems)
         {
-            List<ArmorResponse> armors = playerItems
+            List<HeroArmorResponse> armors = playerItems
                 .Where(pi => pi.ItemType == "armor" && pi.Armor != null)
-                .Select(pi => ArmorResponse.FromEntity(pi.Armor!))
+                .Select(pi => HeroArmorResponse.FromEntity(pi!))
                 .ToList();
 
-            List<WeaponResponse> weapons = playerItems
+            List<HeroWeaponResponse> weapons = playerItems
                 .Where(pi => pi.ItemType == "weapon" && pi.Weapon != null)
-                .Select(pi => WeaponResponse.FromEntity(pi.Weapon!))
+                .Select(pi => HeroWeaponResponse.FromEntity(pi!))
                 .ToList();
 
-            List<PotionResponse> potions = playerItems
+            List<HeroPotionResponse> potions = playerItems
                 .Where(pi => pi.ItemType == "potion" && pi.Potion != null)
-                .Select(pi => PotionResponse.FromEntity(pi.Potion!))
+                .Select(pi => HeroPotionResponse.FromEntity(pi!))
                 .ToList();
 
-            List<FoodResponse> foods = playerItems
+            List<HeroFoodResponse> foods = playerItems
                 .Where(pi => pi.ItemType == "food" && pi.Food != null)
-                .Select(pi => FoodResponse.FromEntity(pi.Food!))
+                .Select(pi => HeroFoodResponse.FromEntity(pi!))
                 .ToList();
 
-            List<OtherResponse> others = playerItems
+            List<HeroOtherResponse> others = playerItems
                 .Where(pi => pi.ItemType == "other" && pi.Other != null)
-                .Select(pi => OtherResponse.FromEntity(pi.Other!))
+                .Select(pi => HeroOtherResponse.FromEntity(pi!))
                 .ToList();
 
             return new PlayerItemsResponse

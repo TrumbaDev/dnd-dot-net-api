@@ -1,11 +1,13 @@
+using DNDApi.Api.v1.DTO.HeroDTO;
+
 namespace DNDApi.Api.v1.DTO.Items
 {
     public class PlayerItemsResponse
     {
-        public List<ArmorResponse> Armors = [];
-        public List<WeaponResponse> Weapons = [];
-        public List<PotionResponse> Potions = [];
-        public List<FoodResponse> Foods = [];
-        public List<OtherResponse> Others = [];
+        public List<HeroArmorResponse> Armors = [];
+        public List<HeroWeaponResponse> Weapons = [];
+        public List<HeroPotionResponse> Potions = [];
+        public List<HeroFoodResponse> Foods = [];
+        public List<HeroOtherResponse> Others = [];
     }
 }

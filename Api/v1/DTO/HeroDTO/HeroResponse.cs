@@ -1,5 +1,3 @@
-
-using DNDApi.Api.v1.DTO.Items;
 using DNDApi.Api.v1.DTO.Passives;
 using DNDApi.Api.v1.DTO.Spells;
 
@@ -19,10 +17,10 @@ namespace DNDApi.Api.v1.DTO.HeroDTO
         public ParamsResponse HeroParams { get; set; } = new();
         public List<SpellResponse> HeroSpells { get; set; } = [];
         public List<PassivesResponse> HeroPassives { get; set; } = [];
-        public List<ArmorResponse> HeroArmors { get; set; } = [];
-        public List<WeaponResponse> HeroWeapons { get; set; } = [];
-        public List<OtherResponse> HeroOthers { get; set; } = [];
-        public List<PotionResponse> HeroPotions { get; set; } = [];
-        public List<FoodResponse> HeroFoods { get; set; } = [];
+        public List<HeroArmorResponse> HeroArmors { get; set; } = [];
+        public List<HeroWeaponResponse> HeroWeapons { get; set; } = [];
+        public List<HeroOtherResponse> HeroOthers { get; set; } = [];
+        public List<HeroPotionResponse> HeroPotions { get; set; } = [];
+        public List<HeroFoodResponse> HeroFoods { get; set; } = [];
     }
 }
