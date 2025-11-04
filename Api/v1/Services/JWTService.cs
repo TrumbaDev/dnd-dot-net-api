@@ -50,8 +50,25 @@ namespace DNDApi.Api.v1.Services
             {
                 throw new SecurityTokenException("ID пользователя в токене не является числом");
             }
-            
+
             return userId;
+        }
+        
+        public static bool GetUserIsDmFromPrincipal(ClaimsPrincipal user)
+        {
+            var isDmClaim = user.FindFirst("isDm");
+
+            if (isDmClaim == null)
+            {
+                throw new SecurityTokenException("Claim с IsDM пользователя не найден в токене");
+            }
+
+            if (!bool.TryParse(isDmClaim.Value, out bool isDm))
+            {
+                throw new SecurityTokenException("IsDM пользователя в токене не является логическим");
+            }
+
+            return isDm;
         }
     }
 }
