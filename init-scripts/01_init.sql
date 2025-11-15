@@ -32,7 +32,8 @@ CREATE TABLE armors_table (
     PlusParametrsName VARCHAR(500) NOT NULL,
     PlusParametrsNumb VARCHAR(100) NOT NULL,
     Weight FLOAT NOT NULL,
-    Cost VARCHAR(200) NOT NULL
+    Cost VARCHAR(200) NOT NULL,
+    Cost2 VARCHAR(200) NOT NULL,
 );
 
 --
